@@ -7,13 +7,16 @@
   <title>YUMELICOT 管理画面</title>
 </head>
 <body>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    window.CMS_MANUAL_INIT = true;
+  </script>
   <script src="https://unpkg.com/decap-cms@^3.8.0/dist/decap-cms.js"></script>
   <script>
     CMS.init({
       config: {
         backend: {
-          name: "git-gateway",
+          name: "github",
+          repo: "yumelicot-sketch/yumelicot-website",
           branch: "main"
         },
         media_folder: "uploads",
@@ -37,7 +40,6 @@
                     name: "events",
                     widget: "list",
                     summary: "{{fields.date}}｜{{fields.title}}",
-                    add_to_top: false,
                     fields: [
                       {label:"日付", name:"date", widget:"string", hint:"例：2026.08.30"},
                       {label:"曜日", name:"day", widget:"select", options:["MON","TUE","WED","THU","FRI","SAT","SUN"], default:"SUN"},
