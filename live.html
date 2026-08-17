@@ -18,26 +18,47 @@
   <div class="kicker">LIVE / SCHEDULE</div>
   <h1 class="title">See you<br>at the show.</h1>
   <p class="lead">YUMELICOTの出演スケジュール。<br>ライブで会えるのを楽しみにしています。</p>
-  <section class="events" aria-label="ライブスケジュール">
-    <article class="event">
-      <div class="date">2026.08.30<span class="dow">SUN</span></div>
-      <div>
-        <h2>MUSIC SAFARI</h2>
-        <div class="meta"><div><strong>LIVE HOUSE UHU</strong></div><div>静岡市葵区七間町12 静岡東宝会館 地下1階</div><div>OPEN 16:00 / START 17:00</div></div>
-        <div class="time">YUMELICOT 18:15〜</div>
-        <figure class="flyer"><img src="music-safari-20260830.jpeg" alt="MUSIC SAFARI 2026年8月30日 フライヤー"><figcaption class="caption">EVENT FLYER</figcaption></figure>
-      </div>
-    </article>
-    <article class="event">
-      <div class="date">2026.10.11<span class="dow">SUN</span></div>
-      <div>
-        <h2>やらまいかフェス</h2>
-        <div class="meta"><div><strong>浜松 Merry You</strong></div></div>
-        <div class="time">YUMELICOT 11:40〜</div>
-      </div>
-    </article>
+  <section class="events" id="events" aria-label="ライブスケジュール">
+    <div class="event"><div>ライブ情報を読み込み中…</div></div>
   </section>
   <p class="note">※ 出演時間などは変更になる場合があります。最新情報はYUMELICOTのInstagramでもお知らせします。</p>
 </main>
 <footer><div class="footer-logo">YUMELICOT</div><p>Princess Princess Cover Band / Shizuoka</p><p>© 2026 YUMELICOT</p></footer>
+
+<script>
+function esc(v){
+  return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+async function loadEvents(){
+  const box=document.getElementById('events');
+  try{
+    const res=await fetch('live-data.json?ts='+Date.now(),{cache:'no-store'});
+    if(!res.ok) throw new Error('load');
+    const data=await res.json();
+    const events=(data.events||[]).slice().sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+    if(!events.length){
+      box.innerHTML='<article class="event"><div>現在公開中のライブ情報はありません。</div></article>';
+      return;
+    }
+    box.innerHTML=events.map(e=>{
+      const address=e.address ? `<div>${esc(e.address)}</div>` : '';
+      const openStart=e.open_start ? `<div>${esc(e.open_start)}</div>` : '';
+      const flyer=e.flyer ? `<figure class="flyer"><img src="${esc(e.flyer)}" alt="${esc(e.title||'ライブ')} フライヤー"><figcaption class="caption">EVENT FLYER</figcaption></figure>` : '';
+      return `<article class="event">
+        <div class="date">${esc(e.date||'')}<span class="dow">${esc(e.day||'')}</span></div>
+        <div>
+          <h2>${esc(e.title||'')}</h2>
+          <div class="meta"><div><strong>${esc(e.venue||'')}</strong></div>${address}${openStart}</div>
+          <div class="time">YUMELICOT ${esc(e.yumelicot_time||'')}</div>
+          ${flyer}
+        </div>
+      </article>`;
+    }).join('');
+  }catch(err){
+    box.innerHTML='<article class="event"><div>ライブ情報を読み込めませんでした。Instagramで最新情報をご確認ください。</div></article>';
+  }
+}
+loadEvents();
+</script>
+
 </body></html>

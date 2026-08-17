@@ -1,0 +1,24 @@
+{
+  "events": [
+    {
+      "date": "2026.08.30",
+      "day": "SUN",
+      "title": "MUSIC SAFARI",
+      "venue": "LIVE HOUSE UHU",
+      "address": "静岡市葵区七間町12 静岡東宝会館 地下1階",
+      "open_start": "OPEN 16:00 / START 17:00",
+      "yumelicot_time": "18:15〜",
+      "flyer": "music-safari-20260830.jpeg"
+    },
+    {
+      "date": "2026.10.11",
+      "day": "SUN",
+      "title": "やらまいかフェス",
+      "venue": "浜松 Merry You",
+      "address": "",
+      "open_start": "",
+      "yumelicot_time": "11:40〜",
+      "flyer": ""
+    }
+  ]
+}
