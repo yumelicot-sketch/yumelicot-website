@@ -7,9 +7,7 @@
   <title>YUMELICOT 管理画面</title>
 </head>
 <body>
-  <script>
-    window.CMS_MANUAL_INIT = true;
-  </script>
+  <script>window.CMS_MANUAL_INIT = true;</script>
   <script src="https://unpkg.com/decap-cms@^3.8.0/dist/decap-cms.js"></script>
   <script>
     CMS.init({
@@ -49,6 +47,34 @@
                       {label:"OPEN / START", name:"open_start", widget:"string", required:false, hint:"例：OPEN 16:00 / START 17:00"},
                       {label:"YUMELICOT出演時間", name:"yumelicot_time", widget:"string", required:false, hint:"例：18:15〜"},
                       {label:"フライヤー画像", name:"flyer", widget:"image", required:false}
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "yumelicot_notes",
+            label: "YUMELICOT NOTES",
+            files: [
+              {
+                name: "notes",
+                label: "NOTESを編集",
+                file: "notes-data.json",
+                format: "json",
+                fields: [
+                  {
+                    label: "投稿一覧",
+                    name: "notes",
+                    widget: "list",
+                    summary: "{{fields.date}}｜{{fields.title}}",
+                    add_to_top: true,
+                    fields: [
+                      {label:"日付", name:"date", widget:"string", hint:"例：2026.08.17"},
+                      {label:"タイトル", name:"title", widget:"string"},
+                      {label:"本文", name:"body", widget:"text"},
+                      {label:"写真", name:"image", widget:"image", required:false},
+                      {label:"投稿者", name:"author", widget:"string", required:false, hint:"例：YUMELICOT / ぴの / みう"}
                     ]
                   }
                 ]
